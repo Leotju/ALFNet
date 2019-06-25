@@ -22,12 +22,14 @@ def filter_boxes(boxes, min_size):
     hs = boxes[:, 3] - boxes[:, 1] + 1
     keep = np.where((ws >= min_size) & (hs >= min_size))[0]
     return keep
+
 def filter_negboxes(boxes, min_size):
     """Remove all boxes with any side smaller than min_size."""
     ws = boxes[:, 2] - boxes[:, 0] + 1
     hs = boxes[:, 3] - boxes[:, 1] + 1
     keep = np.where((ws <= min_size) | (hs <= min_size))[0]
     return keep
+
 def compute_targets(ex_rois, gt_rois, classifier_regr_std,std):
     """Compute bounding-box regression targets for an image."""
 

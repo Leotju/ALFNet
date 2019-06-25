@@ -26,6 +26,9 @@ def augment(img_data, c, augment=True):
     assert 'bboxes' in img_data
     img_data_aug = copy.deepcopy(img_data)
     img = cv2.imread(img_data_aug['filepath'])
+
+    img = cv2.resize(img, (1200, 800))
+
     img_height, img_width = img.shape[:2]
 
     if augment:
@@ -244,52 +247,52 @@ def resize_image(image, gts,igs, scale=[0.6,1.4]):
 
     return image, gts, igs
 
-def augment_resizecrop(img_data, c):
-    assert 'filepath' in img_data
-    assert 'bboxes' in img_data
-    img_data_aug = copy.deepcopy(img_data)
-    img = cv2.imread(img_data_aug['filepath'])
-    img_height, img_width = img.shape[:2]
-
-    # random brightness
-    if c.brightness and np.random.randint(0, 2) == 0:
-        img = _brightness(img, min=c.brightness[0], max=c.brightness[1])
-    # random horizontal flip
-    if c.use_horizontal_flips and np.random.randint(0, 2) == 0:
-        img = cv2.flip(img, 1)
-        # plt.imshow(img,interpolation='bicubic')
-        if len(img_data_aug['bboxes']) > 0:
-            img_data_aug['bboxes'][:, [0, 2]] = img_width - img_data_aug['bboxes'][:, [2, 0]]
-        if len(img_data_aug['ignoreareas']) > 0:
-            img_data_aug['ignoreareas'][:, [0, 2]] = img_width - img_data_aug['ignoreareas'][:, [2, 0]]
-
-    gts = np.copy(img_data_aug['bboxes'])
-    igs = np.copy(img_data_aug['ignoreareas'])
-
-    # img, gts, igs = resize_image(img, gts, igs, scale=[0.5,1.4])
-    img, gts, igs = resize_image(img, gts, igs, scale=[0.4,1.5])
-    if img.shape[0]>=c.random_crop[0]:
-        img, gts, igs = random_crop(img, gts, igs, c.random_crop,limit=16)
-    else:
-        img, gts, igs = random_pave(img, gts, igs, c.random_crop,limit=16)
-
-    img_data_aug['bboxes'] = gts
-    img_data_aug['ignoreareas'] = igs
-
-    # gt = img_data_aug['bboxes']
-    # ig = img_data_aug['ignoreareas']
-    # imgsh = np.copy(img)
-    # if len(gt) > 0 and len(gt[(gt[:, 3] - gt[:, 1]) > 300, :]) > 0:
-    #     for i in range(len(gt)):
-    #         (x1, y1, x2, y2) = gt[i, :]
-    #         cv2.rectangle(imgsh, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
-    #     for i in range(len(ig)):
-    #         (x1, y1, x2, y2) = ig[i, :]
-    #         cv2.rectangle(imgsh, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
-    #     plt.imshow(imgsh, interpolation='bicubic')
-    #     plt.close()
-
-    img_data_aug['width'] = c.random_crop[1]
-    img_data_aug['height'] = c.random_crop[0]
-
-    return img_data_aug, img
+# def augment_resizecrop(img_data, c):
+#     assert 'filepath' in img_data
+#     assert 'bboxes' in img_data
+#     img_data_aug = copy.deepcopy(img_data)
+#     img = cv2.imread(img_data_aug['filepath'])
+#     img_height, img_width = img.shape[:2]
+#
+#     # random brightness
+#     if c.brightness and np.random.randint(0, 2) == 0:
+#         img = _brightness(img, min=c.brightness[0], max=c.brightness[1])
+#     # random horizontal flip
+#     if c.use_horizontal_flips and np.random.randint(0, 2) == 0:
+#         img = cv2.flip(img, 1)
+#         # plt.imshow(img,interpolation='bicubic')
+#         if len(img_data_aug['bboxes']) > 0:
+#             img_data_aug['bboxes'][:, [0, 2]] = img_width - img_data_aug['bboxes'][:, [2, 0]]
+#         if len(img_data_aug['ignoreareas']) > 0:
+#             img_data_aug['ignoreareas'][:, [0, 2]] = img_width - img_data_aug['ignoreareas'][:, [2, 0]]
+#
+#     gts = np.copy(img_data_aug['bboxes'])
+#     igs = np.copy(img_data_aug['ignoreareas'])
+#
+#     # img, gts, igs = resize_image(img, gts, igs, scale=[0.5,1.4])
+#     img, gts, igs = resize_image(img, gts, igs, scale=[0.4,1.5])
+#     if img.shape[0]>=c.random_crop[0]:
+#         img, gts, igs = random_crop(img, gts, igs, c.random_crop,limit=16)
+#     else:
+#         img, gts, igs = random_pave(img, gts, igs, c.random_crop,limit=16)
+#
+#     img_data_aug['bboxes'] = gts
+#     img_data_aug['ignoreareas'] = igs
+#
+#     # gt = img_data_aug['bboxes']
+#     # ig = img_data_aug['ignoreareas']
+#     # imgsh = np.copy(img)
+#     # if len(gt) > 0 and len(gt[(gt[:, 3] - gt[:, 1]) > 300, :]) > 0:
+#     #     for i in range(len(gt)):
+#     #         (x1, y1, x2, y2) = gt[i, :]
+#     #         cv2.rectangle(imgsh, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
+#     #     for i in range(len(ig)):
+#     #         (x1, y1, x2, y2) = ig[i, :]
+#     #         cv2.rectangle(imgsh, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
+#     #     plt.imshow(imgsh, interpolation='bicubic')
+#     #     plt.close()
+#
+#     img_data_aug['width'] = c.random_crop[1]
+#     img_data_aug['height'] = c.random_crop[0]
+#
+#     return img_data_aug, img

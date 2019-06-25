@@ -11,10 +11,10 @@ from __future__ import division
 import random
 import os
 import cPickle
-from keras_alfnet import config
+from keras_alfnet import config_crowd
 
 # pass the settings in the config object
-C = config.Config()
+C = config_crowd.Config()
 os.environ["CUDA_VISIBLE_DEVICES"] = C.gpu_ids
 
 C.init_lr = 1e-4
