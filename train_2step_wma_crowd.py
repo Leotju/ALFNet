@@ -37,7 +37,7 @@ if not os.path.exists(out_path):
     os.makedirs(out_path)
 
 # get the training data
-cache_path = 'data/cashe/crowd/train'
+cache_path = 'data/cache/crowd/train'
 with open(cache_path, 'rb') as fid:
     train_data = cPickle.load(fid)
 num_imgs_train = len(train_data)
