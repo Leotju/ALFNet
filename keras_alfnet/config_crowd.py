@@ -18,7 +18,7 @@ class Config:
 		self.brightness = (0.5, 2, 0.5)
 		self.in_thre = 0.5
 		self.scale = (0.3, 1.0)
-		self.random_crop = (640, 1280)
+		self.random_crop = (640, 960)
 
 		# image channel-wise mean to subtract, the order is BGR
 		self.img_channel_mean = [103.939, 116.779, 123.68]
