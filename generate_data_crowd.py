@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from pycocotools.coco import COCO
 from PIL import Image
 
-ann = COCO('/home/jn1/data/crowdhuman/annotations/train_20_02.json')
+ann = COCO('/home/jn1/data/crowdhuman/annotations_new/train_20_02.json')
 root_dir = 'data/crowd'
 data_dir = '/home/jn1/data/crowdhuman/'
 all_img_path = os.path.join(data_dir, 'images')
