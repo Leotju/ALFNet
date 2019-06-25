@@ -23,8 +23,8 @@ C.alpha = 0.999  # update rate of weight moving average
 # define the path for loading the initialized weight files
 if C.network == 'resnet50':
     # weight_path = '../models/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5'
-    weight_path = '/vpalab/disk_dataset/leo/code/alfnet/models/resnet50_weights_tf_dim_ordering_tf_kernels.h5'
-    '../models/resnet50_weights_tf_dim_ordering_tf_kernels.h5'
+    weight_path = '../models/resnet50_weights_tf_dim_ordering_tf_kernels.h5'
+    # '../models/resnet50_weights_tf_dim_ordering_tf_kernels.h5'
     # weight_path = 'output/valmodels/resnet50/2step/0.0001/resnet_e54_l0.0845779655501.hdf5'
 elif C.network == 'mobilenet':
     weight_path = 'data/models/mobilenet_1_0_224_tf_no_top.h5'
@@ -32,12 +32,12 @@ else:
     raise NotImplementedError('Not support network: {}'.format(C.network))
 
 # define output path for weight files
-out_path = 'output/valmodels/%s/%dstep/%s' % (C.network, C.steps, C.init_lr)
+out_path = '../output/valmodels/%s/%dstep/%s' % (C.network, C.steps, C.init_lr)
 if not os.path.exists(out_path):
     os.makedirs(out_path)
 
 # get the training data
-cache_path = '../data/citypersons/train'
+cache_path = '../data/cashe/crowd/train'
 with open(cache_path, 'rb') as fid:
     train_data = cPickle.load(fid)
 num_imgs_train = len(train_data)
