@@ -58,8 +58,9 @@ for type in types:
 		boxes[:, 1::2] = boxes[:, 1::2] * hr
 		vis_boxes[:, ::2] = vis_boxes[:, ::2] * wr
 		vis_boxes[:, 1::2] = vis_boxes[:, 1::2] * hr
-		ig_boxes[:, ::2] = ig_boxes[:, ::2] * wr
-		ig_boxes[:, 1::2] = ig_boxes[:, 1::2] * hr
+		if ig_boxes.shape[0] > 0:
+			ig_boxes[:, ::2] = ig_boxes[:, ::2] * wr
+			ig_boxes[:, 1::2] = ig_boxes[:, 1::2] * hr
 		if len(boxes)==0:
 			continue
 		valid_count += 1
