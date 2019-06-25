@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 from pycocotools.coco import COCO
 from PIL import Image
 
-ann = COCO('/media/leo/data/datasets/CrowdedHumans/annotations_new/train_20_02.json')
+ann = COCO('/home/jn1/data/crowdhuman/annotations/train_20_02.json')
 root_dir = 'data/crowd'
-data_dir = '/media/leo/data/datasets/CrowdedHumans/'
+data_dir = '/home/jn1/data/crowdhuman/'
 all_img_path = os.path.join(data_dir, 'images')
 all_anno_path = os.path.join(data_dir, 'annotations')
 types = ['train']
@@ -81,6 +81,6 @@ for type in types:
 		annotation['vis_bboxes'] = vis_boxes
 		annotation['ignoreareas'] = ig_boxes
 		image_data.append(annotation)
-	# with open(res_path, 'wb') as fid:
-	# 	cPickle.dump(image_data, fid, cPickle.HIGHEST_PROTOCOL)
-	# print '{} has {} images and {} valid images, {} valid gt and {} ignored gt'.format(type, len(gts), valid_count, box_count, iggt_count)
+	with open(res_path, 'wb') as fid:
+		cPickle.dump(image_data, fid, cPickle.HIGHEST_PROTOCOL)
+	print '{} has {} images and {} valid images, {} valid gt and {} ignored gt'.format(type, len(gts), valid_count, box_count, iggt_count)
