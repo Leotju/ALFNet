@@ -54,7 +54,6 @@ for type in types:
 
         boxes[:, 2:] = boxes[:, 2:] + boxes[:, :2]
         vis_boxes[:, 2:] = vis_boxes[:, 2:] + vis_boxes[:, :2]
-        ig_boxes[:, 2:] = ig_boxes[:, 2:] + ig_boxes[:, :2]
         # boxes[:, 2] = boxes[2] +boxes[0]
 
         im = Image.open(img_path)
@@ -66,6 +65,7 @@ for type in types:
         vis_boxes[:, ::2] = vis_boxes[:, ::2] * wr
         vis_boxes[:, 1::2] = vis_boxes[:, 1::2] * hr
         if ig_boxes.shape[0] > 0:
+            ig_boxes[:, 2:] = ig_boxes[:, 2:] + ig_boxes[:, :2]
             ig_boxes[:, ::2] = ig_boxes[:, ::2] * wr
             ig_boxes[:, 1::2] = ig_boxes[:, 1::2] * hr
         if len(boxes) == 0:
