@@ -55,7 +55,7 @@ def get_target_1st(all_anchors, regr_layer, img_data, C,roi_stride=10,igthre=0.5
 		bbox_deltas = regr_layer[i,:,:]
 		bbox_deltas = bbox_deltas * np.array(C.classifier_regr_std).astype(dtype=np.float32)
 		proposals[:,:4] = bbox_transform_inv(A, bbox_deltas)
-		proposals = clip_boxes(proposals, [C.random_crop[0], C.random_crop[1]])
+		# proposals = clip_boxes(proposals, [C.random_crop[0], C.random_crop[1]])
 		if len(ignoreareas) > 0:
 			ignore_overlap = box_op(np.ascontiguousarray(proposals[:, :4], dtype=np.float),
 									np.ascontiguousarray(ignoreareas, dtype=np.float))
@@ -126,7 +126,7 @@ def get_target_1st_posfirst(all_anchors, regr_layer, img_data, C,igthre=0.5,post
 		bbox_deltas = regr_layer[i,:,:]
 		bbox_deltas = bbox_deltas * np.array(C.classifier_regr_std).astype(dtype=np.float32)
 		proposals[:,:4] = bbox_transform_inv(A, bbox_deltas)
-		proposals = clip_boxes(proposals, [C.random_crop[0], C.random_crop[1]])
+		# proposals = clip_boxes(proposals, [C.random_crop[0], C.random_crop[1]])
 
 		# initialise empty output objectives
 		y_alf_overlap = np.zeros((all_anchors.shape[0], 1))
@@ -198,7 +198,7 @@ def get_target_2nd(anchors, regr_layer, img_data, C, roi_stride=10,igthre=0.5,po
 
 		bbox_deltas = bbox_deltas * np.array(C.classifier_regr_std).astype(dtype=np.float32)
 		proposals[:,:4] = bbox_transform_inv(proposals[:,:4], bbox_deltas)
-		proposals = clip_boxes(proposals, [C.random_crop[0], C.random_crop[1]])
+		# proposals = clip_boxes(proposals, [C.random_crop[0], C.random_crop[1]])
 		if len(ignoreareas) > 0:
 			ignore_overlap = box_op(np.ascontiguousarray(proposals[:, :4], dtype=np.float),
 									np.ascontiguousarray(ignoreareas, dtype=np.float))
@@ -266,7 +266,7 @@ def generate_pp_2nd(all_anchors, regr_layer, C):
 
 		bbox_deltas = bbox_deltas * np.array(C.classifier_regr_std).astype(dtype=np.float32)
 		proposals[:,:4] = bbox_transform_inv(A, bbox_deltas)
-		proposals = clip_boxes(proposals, [C.random_crop[0], C.random_crop[1]])
+		# proposals = clip_boxes(proposals, [C.random_crop[0], C.random_crop[1]])
 		proposals_batch.append(np.expand_dims(proposals,axis=0))
 	return np.concatenate(proposals_batch, axis=0)
 
