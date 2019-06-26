@@ -141,7 +141,7 @@ class Model_2step(Base_model):
 							l.set_weights(weights_tea)
 
 					iter_num += 1
-					if iter_num % 20 == 0:
+					if iter_num % 5 == 0:
 						progbar.update(iter_num,
 									   [('cls1', np.mean(self.losses[:iter_num, 0])),
 										('regr1', np.mean(self.losses[:iter_num, 1])),
